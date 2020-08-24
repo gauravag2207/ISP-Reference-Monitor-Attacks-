@@ -1,0 +1,18 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase:  Open a New file, with create parameter set as false
+#ErrorCase: ifs its allowed then its an error.
+
+#Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",False)
+try:
+    assert("testfile.txt.a" not in listfiles())
+    assert("testfile.txt.b" not in listfiles())
+except AssertionError:
+    log("ATTACK 8 --> ERROR: Should not create the files when the flag is False")
+

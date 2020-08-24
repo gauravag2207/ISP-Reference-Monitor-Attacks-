@@ -1,0 +1,22 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase: Read a file with a negative byte value
+#ErrorCase: Cant read if file has negative byte value.
+
+#Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+#Open File 
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+#Read 
+try:
+  myfile.readat(-4,0)
+except RepyArgumentError:
+    log("ATTACK 4 --> ERROR: read with a negative byte value not handled in reference monitor\n")
+
+myfile.close()
+

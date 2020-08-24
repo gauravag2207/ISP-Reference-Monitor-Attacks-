@@ -1,0 +1,35 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase: Write valid data to file
+#ErrorCase: Valid data is not written
+
+#Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+#Create an AB file 
+myfile=ABopenfile("testfile.txt",True)
+
+#Write valid data
+myfile.writeat("SdatadataE",0)
+
+#Close file
+myfile.close()
+
+#Reopen file again
+myfile=ABopenfile("testfile.txt",True)
+
+#Read file to check the files data
+try:
+ assert('SdatadataE' == myfile.readat(None,0))
+ #Close the file
+ myfile.close()
+except:
+ #Close the file
+ myfile.close()
+ log("ATTACK 7 --> ERROR: Valid data is not written to the file \n")
+
+
+

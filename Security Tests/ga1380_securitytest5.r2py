@@ -1,0 +1,36 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase: Write invalid data to a file and close it, expect previously written data to be retained
+#ErrorCase: New invalid data is saved
+
+# Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File 
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write invalid data to the file
+myfile.writeat("invaliddata",0)
+
+#Close the file
+myfile.close()
+
+# Reopen file
+myfile=ABopenfile("testfile.txt",True)
+
+#Check file contents
+try:
+  # File should have contents 'SE' satisfying the given requirements
+  assert('SE' == myfile.readat(2,0))
+  # Close the file
+  myfile.close()
+except:
+  myfile.close()
+  # Error Handle or Failure Condition
+  log("ATTACK 5 --> ERROR: Invalid data was saved previously written valid data is not saved \n")
+
+
+

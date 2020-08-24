@@ -1,0 +1,21 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase: Write to Higher offset value
+#ErrorCase: Expect an error as you cant write a higher offset value
+
+# Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File 
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+try:
+  myfile.writeat("SdatadataE",500)
+except SeekPastEndOfFileError:
+  log("ATTACK 2 --> ERROR: write a higher offset value not handled in reference monitor\n")
+
+myfile.close()

@@ -1,0 +1,24 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase: Open existing file with create parameter set as true
+#ErrorCase: Cant open file
+
+#Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+#Open File 
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+#Close file
+myfile.close()
+
+#FIle is not deleted,hence File should be available.
+#Re-Open
+try:
+  myfile=ABopenfile("testfile.txt",True)
+except:
+  log("ATTACK 1 --> ERROR: Cannot Re-Open existing File with create parameter set as True \n")
+myfile.close()

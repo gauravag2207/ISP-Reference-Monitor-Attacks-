@@ -1,0 +1,22 @@
+###Net ID ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase: Try to read with a negative offset value
+#ErrorCase: Expect an error as you cant
+
+# Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File 
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Read data from the file with negative offset value
+try:
+  myfile.readat(2,-2)
+except RepyArgumentError:
+  log("ATTACK 3 --> ERROR: read with a negative offset value not handled in reference monitor\n")
+
+myfile.close()
+

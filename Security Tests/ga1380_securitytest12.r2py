@@ -1,0 +1,40 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase: Perform write Operations on multiple files
+#ErrorCase: Write in multiple files fail
+
+#Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+if "example.txt.a" in listfiles():
+  removefile("example.txt.a")
+if "example.txt.b" in listfiles():
+  removefile("example.txt.b")  
+
+#Open File 
+myfile1=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile2=ABopenfile("example.txt",True)  #Create an AB file
+#Write valid data
+myfile1.writeat("Sdata1E",0)
+myfile2.writeat("Sdata2E",0)
+
+#Close
+myfile1.close()
+myfile2.close()
+
+#Open Files
+myfile1=ABopenfile("testfile.txt",True)  #open an AB file
+myfile2=ABopenfile("example.txt",True)  #open an AB file
+
+#Read and check files
+try:
+ assert('Sdata1E' == myfile1.readat(7,0))
+ assert('Sdata2E' == myfile2.readat(7,0))
+ myfile1.close()
+ myfile2.close()
+except:
+ myfile1.close()
+ myfile2.close()
+ log("ATTACK 12 --> ERROR: Multiple file Handling error: Write operations on multiple files failed \n")

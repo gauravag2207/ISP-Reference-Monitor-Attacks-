@@ -1,0 +1,27 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase:  Read a file with byte value greater than EOF
+#ErrorCase: If read then its an error
+
+#Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+#Open File 
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+#Write valid data
+myfile.writeat("SdatadataE",0)
+
+#EOF is at 10
+#Trying to read at 15 > EOF
+try:
+  myfile.readat(15,0)
+except:
+  log("ATTACK 11 --> ERROR\n")
+  pass  
+
+myfile.close()
+

@@ -1,0 +1,32 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase: Read or write to a large file
+#ErrorCase: NOt able to read or write
+
+#Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+#Open File 
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+#Write Operation
+try:
+  myfile.writeat("SdatadataE"*1000,0)
+except:
+  log("ATTACK 10 --> ERROR: Large File R/W exception \n")
+
+myfile.close()
+
+#Re-Open File 
+myfile=ABopenfile("testfile.txt",True)  #AB file Exists
+
+#Read Operation
+try:
+  myfile.readat(None,0)
+except:
+  log("ATTACK 10 --> ERROR: Large File R/W exception \n")
+
+myfile.close()

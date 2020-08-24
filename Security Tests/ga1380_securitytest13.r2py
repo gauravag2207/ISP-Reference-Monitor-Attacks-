@@ -1,0 +1,34 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase: Multithread: if One thread creates other thread tries to delete. it should fail when it tried to delete
+#ErrorCase: if second thread is succeful in deleting then its an error
+
+#Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+def thread1():
+  #Create new file
+  myfile=ABopenfile("testfile.txt", True)
+  #READ
+  if myfile.readat(2,0) == "SE":
+    try:
+      #WRITE
+      myfile.writeat("Sdata1E",0)
+      sleep(5)
+      myfile.close()
+    except RepyArgumentError:
+      pass
+
+def thread2():
+  try:
+    #REMOVE
+    if "testfile.txt.a" in listfiles():
+      removefile("testfile.txt.a")
+  except Exception as E:
+    log("ATTACK 13 --> ERROR")
+    
+createthread(thread1)
+createthread(thread2)

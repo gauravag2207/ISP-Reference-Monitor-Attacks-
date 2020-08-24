@@ -1,0 +1,36 @@
+###Net ID Ga1380
+###Last Modified by Gaurav Agrawal
+#TestCase: Multithread: Multiple thread try to write to same file.
+#ErrorCase: If more than one thread can write then its an error
+
+#Cleanup old files
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+
+#Open File
+myfile=ABopenfile("testfile.txt", True) #Create an AB file
+
+def thread1():
+  #WRITE
+  myfile.writeat("SdataE",0)
+
+def thread2():
+  #WRITE again
+  myfile.writeat("SmoredataE",0)
+
+createthread(thread1)
+createthread(thread2)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt", False)
+
+try:
+  #log(myfile.readat(None, 0))
+  assert ("SmoredataE" == myfile.readat(None,0) or "SdataE" == myfile.readat(None,0))  # should be 'SE' invalid data with space was written
+  myfile.close()
+except:
+  log(" ATTACK 14 --> ERROR: Invalid data written to file!")
+  myfile.close()
